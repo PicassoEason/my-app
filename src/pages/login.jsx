@@ -65,13 +65,13 @@ export default function Login() {
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
                   <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
-                    Remember me
+                    記住我
                   </label>
                 </div>
 
                 <div className="text-sm leading-6">
                   <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                    Forgot password?
+                    忘記密碼了?
                   </a>
                 </div>
               </div>
@@ -81,7 +81,7 @@ export default function Login() {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  登入
                 </button>
               </div>
             </form>
@@ -126,7 +126,7 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500 dark:text-slate-50">
             還不是會員?{' '}
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <a href="./register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               註冊
             </a>
           </p>
