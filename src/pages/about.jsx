@@ -65,12 +65,12 @@ export default function About() {
             </h1>
             <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
               <p>
-                我熱愛西方文學及IOT互動專案，曾開發 "火場VR逃生"、"Petpew"、"溫溼度感測"，其中PETPAW是在實習時與夥伴製作而成的，我負責iot整合及後端api開發。
+                我熱愛西方文學及IOT互動專案，曾開發 &quot;火場VR逃生&quot;、&quot;Petpew&quot;、&quot;溫溼度感測&quot;，其中PETPAW是在實習時與夥伴製作而成的，我負責iot整合及後端api開發。
               </p>
               <p>
               五專三年級時，考取電腦軟體設計丙檢及參加東南亞夏令營增加國際視野。<br></br>
-              五專四年級時，透過微軟官方提供的學習資源，考取微軟AI-900及TQC python3的證照並在同年取得”顯示科技怎麼用?我的課程我來定!”佳作及“CSF程速勁賽-Python夏季競行曲”的第三名。<br></br>
-              五專五年級時，考取“AWS  Certified  Cloud  Practitioner”雲從業人員證照，並在專五下學期積極參加AWS 雲端運算中區區域選拔賽，希望能選上並帶給學校榮譽。
+              五專四年級時，透過微軟官方提供的學習資源，考取微軟AI-900及TQC python3的證照並在同年取得&quot;顯示科技怎麼用?我的課程我來定!&quot;佳作及&quot;CSF程速勁賽-Python夏季競行曲&quot;的第三名。<br></br>
+              五專五年級時，考取&quot;AWS  Certified  Cloud  Practitioner&quot;雲從業人員證照，並在專五下學期積極參加AWS 雲端運算中區區域選拔賽，希望能選上並帶給學校榮譽。
               </p>
             </div>
           </div>
