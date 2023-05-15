@@ -10,7 +10,7 @@ import {
     } from "firebase/auth"
 import { auth } from '../../utils/firebase'
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect , useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 
 
@@ -29,6 +29,7 @@ export default function Login() {
           
       }
   }
+//Sign in with Github
   const providerGithub = new GithubAuthProvider()
     const GithubLogin=async()=>{
         try{
@@ -39,6 +40,67 @@ export default function Login() {
             console.log(error)
         }
     }
+// -----------------------------------------------------------
+    const HandleLogin = async (email, password) => {
+        try {
+          let payload = {
+            username: email,
+            password: password,
+          }
+    
+          await axios.post('http://localhost:8080/api/auth', payload)
+            .then((res) => {
+              localStorage.setItem('token', res.data.token.access_token);
+              localStorage.setItem('user', JSON.stringify(res.data.user));
+              navigate(from, { tempData: tempData })
+            })
+            .catch((error) => {
+              if (error.response.status == 400) {
+                setFailed(true)
+              }
+              if (error.response.status == 401 && error.response.data.email == "Unauthorized") {
+                setAccessToken(error.response.data.token.access_token)
+                setUserData(error.response.data.user)
+                setOpen(true)
+              }
+            });
+        route.push('/dashboard')
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        HandleLogin(email, password);
+      };
+// //sign in Email/password
+//     const [email, setEmail] = useState('');
+//     const [password, setPassword] = useState('');
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//     // 建立要傳送的資料物件
+//     const data = {
+//         email: email,
+//         password: password
+//       };
+  
+//       try {
+//         const response = await fetch('http://localhost:8080/api/auth', {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json'
+//           },
+//           body: JSON.stringify(data)
+//         });
+//         const D=localStorage.setItem('user', JSON.stringify(data.user))
+//         console.log(D);
+//       } catch (error) {
+//         console.log('發生錯誤:', error);
+//       }
+//     };
+
+// useEffect
   useEffect(()=>{
     if(user){
         route.push('/dashboard')
@@ -63,7 +125,7 @@ return(
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit} method="POST">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -76,7 +138,7 @@ return(
                     autoComplete="email"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                    />
                 </div>
               </div>
 
@@ -90,6 +152,7 @@ return(
                     name="password"
                     type="password"
                     autoComplete="current-password"
+                 
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
