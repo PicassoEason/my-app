@@ -29,23 +29,7 @@ export default function Login() {
           
       }
   }
-    // //Sign in with Facebook
-    // const fbProvider = new FacebookAuthProvider()
-    // const FacebookLogin=async()=>{
-    //     try{
-    //         const result=await signInWithPopup(auth,fbProvider)
-    //         const credantial=await FacebookAuthProvider.credentialFromResult(result)
-    //         const token=credantial.accessToken
-    //         let photoUrl=result.user.photoURL+'?height=500&access_token='+token
-    //         await updateProfile(auth.currentUser,{photoURL:photoUrl})
-    //         console.log(result.user)
-    //         route.push('/dashboard')
-    //     }catch(error){
-    //         console.log(error)
-    //     }
-    // }
-    //Sign in with github
-    const providerGithub = new GithubAuthProvider()
+  const providerGithub = new GithubAuthProvider()
     const GithubLogin=async()=>{
         try{
             const result=await signInWithPopup(auth,providerGithub)
@@ -53,23 +37,17 @@ export default function Login() {
             route.push('/dashboard')
         }catch(error){
             console.log(error)
-            
         }
     }
-
   useEffect(()=>{
     if(user){
         route.push('/dashboard')
     }else{
         console.log('login')
-    }
+    }},[route, user])
 // eslint-disable-next-line react-hooks/exhaustive-deps
-},[user])
-
-
 
 return(
-    
 <>
 <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -149,11 +127,6 @@ return(
                     <FcGoogle className="text-2xl" />
                     Sign in with Google    
                 </button>
-
-                  {/* <button onClick={FacebookLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
-                    <AiFillFacebook className="text-2xl text-blue-500"  />
-                    Sign in with Facebook
-                </button> */}
 
                   <button onClick={GithubLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
                     <AiFillGithub className="text-2xl text-blue-500"  />
