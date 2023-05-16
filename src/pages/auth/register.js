@@ -5,7 +5,8 @@ import { useEffect, useState } from "react"
 import axios from 'axios'
 
 export default function Register() {
-  const [error, setError] = useState("");
+  const route = useRouter()
+  const [error, setError] = useState("")
   const isValidPassword = (password) => {
     const passwordRegex = /^.{8,}$/;
     return passwordRegex.test(password);
@@ -24,7 +25,7 @@ export default function Register() {
       }
       const res = await axios.post('http://localhost:8080/api/users', payload)
       console.log("this is res data ",res.data)
-      route.push('/login')
+      route.push('/auth/login')
     } catch (error){
      if(error.response && error.response.status === 400){
      
@@ -35,7 +36,7 @@ export default function Register() {
       }
      }
     if(error.response && error.response.status === 409){
-      setError("使用者名稱重複")
+      setError("Email已存在")
     }
     // setError(error.message);
     }
