@@ -140,9 +140,9 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/TechNote">TechNote</MobileNavItem>
                 { !user || token == '' ? <div>
-                  <MobileNavItem href="./auth/login">Login</MobileNavItem>
+                  <MobileNavItem href="/auth/login">Login</MobileNavItem>
                 </div>: 
-                <MobileNavItem href="./dashboard">Logout</MobileNavItem>
+                <MobileNavItem href="/dashboard">Logout</MobileNavItem>
                 }
               </ul>
             </nav>
@@ -200,9 +200,9 @@ function DesktopNavigation(props) {
         <NavItem href="/TechNote">TechNote</NavItem>
         { !user || token == '' ? 
         <div>
-          <NavItem href="./auth/login">Login</NavItem>
+          <NavItem href="/auth/login">Login</NavItem>
         </div>
-        :<NavItem href="./dashboard">Logout</NavItem>}
+        :<NavItem href="/dashboard">Logout</NavItem>}
       </ul>
     </nav>
   )

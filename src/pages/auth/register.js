@@ -1,78 +1,52 @@
-/* eslint-disable @next/next/no-img-element */
-import { FcGoogle } from "react-icons/fc"
-import { AiFillFacebook, AiFillGithub } from "react-icons/ai"
-import {
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  signInWithPopup,
-  updateProfile,
-  GithubAuthProvider,
-  signInAnonymously
-} from "firebase/auth"
-import { auth } from '../../utils/firebase'
+
+
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
 import axios from 'axios'
 
-export default function Login() {
-  const [user, loading] = useAuthState(auth)
-  const route = useRouter()
-  //Sign in with google
-  const googleProvider = new GoogleAuthProvider()
-  const GoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider)
-      console.log(result.user)
-      route.push('/dashboard')
-    } catch (error) {
-      console.log(error)
-
-    }
-  }
-  //Sign in with Github
-  const providerGithub = new GithubAuthProvider()
-  const GithubLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, providerGithub)
-      console.log(result.user)
-      route.push('/dashboard')
-    } catch (error) {
-      console.log(error)
-    }
-  }
+export default function Register() {
+  const [error, setError] = useState("");
+  const isValidPassword = (password) => {
+    const passwordRegex = /^.{8,}$/;
+    return passwordRegex.test(password);
+  };
+  const isValidPassword2 = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
   // -----------------------------------------------------------
-  const HandleLogin = async (email, password) => {
+  const HandleRegister = async (userName,email, password) => {
     try {
       let payload = {
-        email: email,
-        password: password,
+        UserName:userName.toString(),
+        email: email.toString(),
+        password: password.toString(),
       }
-      const res = await axios.post('http://localhost:8080/api/auth', payload)
-      console.log(res.data)
-      localStorage.setItem('token', res.data.data)
-      route.push('/dashboard')
-    } catch (error) {
-      console.error(error);
+      const res = await axios.post('http://localhost:8080/api/users', payload)
+      console.log("this is res data ",res.data)
+      route.push('/login')
+    } catch (error){
+     if(error.response && error.response.status === 400){
+     
+       if (!isValidPassword(password)) {
+        setError("至少八位數")
+      }else if(!isValidPassword2(password)){
+        setError("必須包含大小寫字母和特殊符號")
+      }
+     }
+    if(error.response && error.response.status === 409){
+      setError("使用者名稱重複")
+    }
+    // setError(error.message);
     }
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const email = event.target[0].value
-    const password = event.target[1].value
-    HandleLogin(email, password);
+    const UserName = event.target[0].value
+    const email = event.target[1].value
+    const password = event.target[2].value
+    HandleRegister(UserName,email, password);
   };
- 
-  // useEffect
-  useEffect(() => {
-    if (user) {
-      route.push('/dashboard')
-    } else {
-      console.log('login')
-    }
-  }, [route, user])
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -84,13 +58,29 @@ export default function Login() {
             alt="Your Company"
           />
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+          Register account
           </h2>
         </div>
-
+        
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <form className="space-y-6" onSubmit={handleSubmit} method="POST">
+            <div>
+                <label htmlFor="UserName" className="block text-sm font-medium leading-6 text-gray-900">
+                 UserName
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="UserName"
+                    name="UserName"
+                    type="UserName"
+                    autoComplete="UserName"
+                    required
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
@@ -110,6 +100,9 @@ export default function Login() {
               <div>
                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                   Password
+                  <div className="text-red-500">
+                  {error && <div className="error">{error}</div>}
+                  </div>
                 </label>
                 <div className="mt-2">
                   <input
@@ -117,14 +110,14 @@ export default function Login() {
                     name="password"
                     type="password"
                     autoComplete="current-password"
-
+                  
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
-
               <div className="flex items-center justify-between">
+          
 
 
               </div>
@@ -134,7 +127,7 @@ export default function Login() {
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Sign in
+                  Register 
                 </button>
               </div>
             </form>
@@ -149,26 +142,14 @@ export default function Login() {
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4">
-
-                <button onClick={GoogleLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
-                  <FcGoogle className="text-2xl" />
-                  Sign in with Google
-                </button>
-
-                <button onClick={GithubLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
-                  <AiFillGithub className="text-2xl text-blue-500" />
-                  Sign in with Github
-                </button>
-              </div>
-
-            </div>
-            <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
-            <a href="/auth/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-             Register Now
+              <p className="mt-10 text-center text-sm text-gray-500">
+            Already  to  start?{' '}
+            <a href="/auth/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            Login in 
             </a>
           </p>
+
+            </div>
           </div>
         </div>
 
