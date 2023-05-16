@@ -139,9 +139,11 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/TechNote">TechNote</MobileNavItem>
-                { user || token !== '' ? <div>
+                { !user || token == '' ? <div>
+                  <MobileNavItem href="./auth/login">Login</MobileNavItem>
+                </div>: 
                 <MobileNavItem href="./dashboard">Logout</MobileNavItem>
-                </div>:  <MobileNavItem href="./auth/login">Login</MobileNavItem>}
+                }
               </ul>
             </nav>
           </Popover.Panel>
@@ -177,7 +179,7 @@ function NavItem({ href, children }) {
 function DesktopNavigation(props) {
   const [token ,setToken] = useState('')
   const [user,loading]=useAuthState(auth)
-  console.log(token)
+
   const route=useRouter() 
   useEffect(() => {
     setToken(localStorage.getItem('token'))
@@ -196,10 +198,11 @@ function DesktopNavigation(props) {
         {/* <NavItem href="/articles">Articles</NavItem> */}
         <NavItem href="/projects">Projects</NavItem>
         <NavItem href="/TechNote">TechNote</NavItem>
-        { user || token !== '' ? <div>
-        <NavItem href="./dashboard">Logout</NavItem>
-        </div>:   <NavItem href="./auth/login">Login</NavItem>}
-        {/* <NavItem href="/uses">Uses</NavItem> */}
+        { !user || token == '' ? 
+        <div>
+          <NavItem href="./auth/login">Login</NavItem>
+        </div>
+        :<NavItem href="./dashboard">Logout</NavItem>}
       </ul>
     </nav>
   )
