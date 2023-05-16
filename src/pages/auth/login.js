@@ -6,13 +6,14 @@ import {
       GoogleAuthProvider,
       signInWithPopup,
     updateProfile,
-    GithubAuthProvider
+    GithubAuthProvider,
+  signInAnonymously
     } from "firebase/auth"
 import { auth } from '../../utils/firebase'
 import { useRouter } from "next/router"
 import { useEffect , useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-
+import axios from 'axios'
 
 export default function Login() {
   const [user,loading]=useAuthState(auth)
@@ -44,27 +45,14 @@ export default function Login() {
     const HandleLogin = async (email, password) => {
         try {
           let payload = {
-            username: email,
+            email: email,
             password: password,
           }
-    
-          await axios.post('http://localhost:8080/api/auth', payload)
-            .then((res) => {
-              localStorage.setItem('token', res.data.token.access_token);
-              localStorage.setItem('user', JSON.stringify(res.data.user));
-              navigate(from, { tempData: tempData })
-            })
-            .catch((error) => {
-              if (error.response.status == 400) {
-                setFailed(true)
-              }
-              if (error.response.status == 401 && error.response.data.email == "Unauthorized") {
-                setAccessToken(error.response.data.token.access_token)
-                setUserData(error.response.data.user)
-                setOpen(true)
-              }
-            });
-        route.push('/dashboard')
+          const res = await axios.post('http://localhost:8080/api/auth', payload)
+          console.log(res.data)
+          localStorage.setItem('token', res.data.data)
+          route.push('/dashboard')
+          
         } catch (error) {
           console.error(error);
         }
@@ -72,6 +60,8 @@ export default function Login() {
     
       const handleSubmit = (event) => {
         event.preventDefault();
+        const email = event.target[0].value
+        const password = event.target[1].value
         HandleLogin(email, password);
       };
 // //sign in Email/password
@@ -165,7 +155,7 @@ return(
               </div>
 
               <div>
-                <button
+                <button 
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
