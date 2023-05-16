@@ -14,6 +14,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import axios from 'axios'
+import Link from "next/link"
 
 export default function Login() {
   const [user, loading] = useAuthState(auth)
@@ -165,9 +166,9 @@ export default function Login() {
             </div>
             <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{' '}
-            <a href="/auth/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link href={"/auth/register"} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
              Register Now
-            </a>
+            </Link>
           </p>
           </div>
         </div>

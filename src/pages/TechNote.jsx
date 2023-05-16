@@ -39,6 +39,10 @@ export default function TechNote() {
     const [user,loading]=useAuthState(auth)
     console.log(token)
     const route=useRouter() 
+    useEffect(() => {
+        setToken(localStorage.getItem('token'))
+
+    },[])
     if (loading) return <h1>Loading ....</h1>
     const logout=async()=>{
         if ((!user)|| (token=="")) route.push('/auth/login')
@@ -46,10 +50,6 @@ export default function TechNote() {
     }
     if (user || token !="")
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        setToken(localStorage.getItem('token'))
-
-    },[])
   return (
     <>
       <Head>

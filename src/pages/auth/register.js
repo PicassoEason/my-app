@@ -3,7 +3,7 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import axios from 'axios'
-
+import {Link,Image} from "next/link"
 export default function Register() {
   const route = useRouter()
   const [error, setError] = useState("")
@@ -53,7 +53,7 @@ export default function Register() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
+          <Image
             className="mx-auto h-10 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company"
@@ -145,9 +145,9 @@ export default function Register() {
 
               <p className="mt-10 text-center text-sm text-gray-500">
             Already  to  start?{' '}
-            <a href="/auth/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link href="/auth/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
             Login in 
-            </a>
+            </Link>
           </p>
 
             </div>
