@@ -63,32 +63,7 @@ export default function Login() {
     const password = event.target[1].value
     HandleLogin(email, password);
   };
-  // //sign in Email/password
-  //     const [email, setEmail] = useState('');
-  //     const [password, setPassword] = useState('');
-  //     const handleSubmit = async (e) => {
-  //         e.preventDefault();
-  //     // 建立要傳送的資料物件
-  //     const data = {
-  //         email: email,
-  //         password: password
-  //       };
-
-  //       try {
-  //         const response = await fetch('http://localhost:8080/api/auth', {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json'
-  //           },
-  //           body: JSON.stringify(data)
-  //         });
-  //         const D=localStorage.setItem('user', JSON.stringify(data.user))
-  //         console.log(D);
-  //       } catch (error) {
-  //         console.log('發生錯誤:', error);
-  //       }
-  //     };
-
+ 
   // useEffect
   useEffect(() => {
     if (user) {

@@ -5,7 +5,9 @@ import { Card } from '@/components/Card'
 import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import React, { useEffect, useState } from "react"
-
+import { useRouter } from 'next/router'
+import {auth} from '../utils/firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 
 function classNames(...classes) {
@@ -33,6 +35,21 @@ function Appearance({ title, description, event, cta, href }) {
 }
 
 export default function TechNote() {
+  const [token ,setToken] = useState('')
+    const [user,loading]=useAuthState(auth)
+    console.log(token)
+    const route=useRouter() 
+    if (loading) return <h1>Loading ....</h1>
+    const logout=async()=>{
+        if ((!user)|| (token=="")) route.push('/auth/login')
+        auth.signOut()
+    }
+    if (user || token !="")
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        setToken(localStorage.getItem('token'))
+
+    },[])
   return (
     <>
       <Head>
@@ -77,8 +94,7 @@ export default function TechNote() {
           
         </div>
     <div><br></br></div>
-
-      <div>
+   { user || token !== '' ?  <div>
       <form action="#">
       <Tab.Group>
         {({ selectedIndex }) => (
@@ -114,7 +130,7 @@ export default function TechNote() {
        
       </div>
     </form>
-      </div>
+    </div>: <h1>此處為：登入後顯示留言板</h1>}
       </SimpleLayout>
     </>
   )

@@ -1,10 +1,11 @@
-import { Fragment, useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef , useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
-
+import {auth} from '../utils/firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 import { Container } from '@/components/Container'
 import avatarImage from '@/images/avatar.jpg'
 
@@ -124,7 +125,7 @@ function MobileNavigation(props) {
                 <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/TechNote">TechNote</MobileNavItem>
-              
+
                 <MobileNavItem href="./auth/login">Login</MobileNavItem>
               </ul>
             </nav>

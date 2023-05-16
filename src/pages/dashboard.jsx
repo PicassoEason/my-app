@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 export default function Dashboard(){
     // let emptyString = new String();
     // const token = localStorage.getItem('token')
-    let token = ''
+    const [token ,setToken] = useState('')
     const [user,loading]=useAuthState(auth)
     console.log(token)
     const route=useRouter() 
@@ -18,7 +18,7 @@ export default function Dashboard(){
     if (user || token !="")
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        let token = localStorage.getItem('token')
+        setToken(localStorage.getItem('token'))
 
     },[])
     return(
