@@ -1,18 +1,30 @@
 import {auth} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
-export default function Dashboard(){
-    const  token= localStorage.getItem('token')
-    const [user,loading]=useAuthState(auth)
+import { useEffect, useState } from "react"
 
+export default function Dashboard(){
+    // let emptyString = new String();
+    // const token = localStorage.getItem('token')
+    let token = ''
+    const [user,loading]=useAuthState(auth)
+    console.log(token)
     const route=useRouter() 
     if (loading) return <h1>Loading ....</h1>
-    if ((!user)|| token==null) route.push('/auth/login')
-    if (user)
+    const logout=async()=>{
+        if ((!user)|| (token=="")) route.push('/auth/login')
+        auth.signOut()
+    }
+    if (user || token !="")
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        let token = localStorage.getItem('token')
+
+    },[])
     return(
         <div>
-            <h1>Welcome to {user.displayName} dashboard </h1>
-            <button onClick={() =>auth.signOut()}>Sign out</button>
+            <h1>Welcome to Your dashboard </h1>
+            <button onClick={logout}>Sign out</button>
         </div>
     )
 }
