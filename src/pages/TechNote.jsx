@@ -10,6 +10,7 @@ import {auth} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import axios from 'axios'
 //顯示所有留言(所有用戶)
+
 const AllMessage = async () => {
   try {
     const res = await axios.get('http://localhost:8080/api/MessageBoard/');
@@ -87,7 +88,7 @@ export default function TechNote() {
     const route=useRouter() 
     useEffect(() => {
         setToken(localStorage.getItem('token'))
-
+        AllMessage()
     },[])
     if (loading) return <h1>Loading ....</h1>
     const logout=async()=>{
@@ -142,7 +143,7 @@ export default function TechNote() {
     <div><br></br></div>
    { user || token !== '' ? 
     <div>
-      <form action="#">
+      <form action="">
       <Tab.Group>
         {({ selectedIndex }) => (
           <>
