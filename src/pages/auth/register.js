@@ -3,7 +3,8 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import axios from 'axios'
-import {Link,Image} from "next/link"
+import Link from "next/link"
+import Image from 'next/image'
 export default function Register() {
   const route = useRouter()
   const [error, setError] = useState("")
