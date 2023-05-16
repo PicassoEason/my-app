@@ -94,7 +94,8 @@ export default function TechNote() {
           
         </div>
     <div><br></br></div>
-   { user || token !== '' ?  <div>
+   { user || token !== '' ? 
+    <div>
       <form action="#">
       <Tab.Group>
         {({ selectedIndex }) => (

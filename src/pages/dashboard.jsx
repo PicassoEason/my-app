@@ -10,17 +10,16 @@ export default function Dashboard(){
     const [user,loading]=useAuthState(auth)
     console.log(token)
     const route=useRouter() 
+    useEffect(() => {
+      setToken(localStorage.getItem('token'))
+    },[])
     if (loading) return <h1>Loading ....</h1>
     const logout=async()=>{
-        if ((!user)|| (token=="")) route.push('/auth/login')
         auth.signOut()
+        if ((!user)|| (token=="")) route.push('/auth/login')
     }
-    if (user || token !="")
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        setToken(localStorage.getItem('token'))
-
-    },[])
+    if (user || token !="")
     return(
         <div>
             <h1>Welcome to Your dashboard </h1>
