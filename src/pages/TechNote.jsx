@@ -8,6 +8,52 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from 'next/router'
 import {auth} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import axios from 'axios'
+//顯示所有留言(所有用戶)
+const AllMessage = async () => {
+  try {
+    const res = await axios.get('http://localhost:8080/api/MessageBoard/');
+    const messages = res.data.message;
+    const messageContainer = document.getElementById("message");
+    const lastDisplayedMessageId = messageContainer.dataset.lastDisplayedMessageId || ""; // 获取已显示的最后一条消息的ID
+  
+    messages.forEach((message) => {
+      const messageId = message._id;
+  
+      // 判断是否为新的消息
+      if (messageId > lastDisplayedMessageId) {
+        const username = message.Username;
+        const body = message.body;
+  
+        const messageHTML = `
+          <p>誰說的: ${username}</p>
+          <p>說啥?: ${body}</p>
+          <hr>`;
+  
+        messageContainer.innerHTML += messageHTML;
+      }
+    });
+  
+    // 更新最后一条已显示消息的ID
+    const lastMessage = messages[messages.length - 1];
+    const lastMessageId = lastMessage._id;
+    messageContainer.dataset.lastDisplayedMessageId = lastMessageId;
+  } catch (error) {
+    console.error(error);
+  }
+}
+//編輯該留言(userid為當前用戶的留言)
+const EditMessage = async () => {
+  
+}
+//刪除留言(當前用戶)
+const DeleteMessage = async () => {
+  
+}
+//新增留言(當前用戶)
+const AddMessage = async () => {
+  
+}
 
 
 function classNames(...classes) {
@@ -115,13 +161,20 @@ export default function TechNote() {
                     defaultValue={''}
                   />
                 </div>
+              
               </Tab.Panel>
-            
+              <div id='message' data-last-displayed-message-id=""></div>
             </Tab.Panels>
           </>
         )}
       </Tab.Group>
       <div className="mt-2 flex justify-end">
+        <button
+        onClick={AllMessage}
+          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          顯示留言
+        </button>
         <button
           type="submit"
           className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
