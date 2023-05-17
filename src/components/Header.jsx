@@ -185,7 +185,7 @@ function DesktopNavigation(props) {
     setToken(localStorage.getItem('token'))
   },[])
   if (loading) return <h1>Loading ....</h1>
-  const logout=async()=>{
+  async()=>{
       if ((!user)|| (token=="")) route.push('/auth/login')
       auth.signOut()
   }
