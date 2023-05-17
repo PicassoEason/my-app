@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { Tab } from '@headlessui/react'
-import { AtSymbolIcon, CodeBracketIcon, LinkIcon } from '@heroicons/react/20/solid'
 import { Card } from '@/components/Card'
 import { Section } from '@/components/Section'
 import { SimpleLayout } from '@/components/SimpleLayout'

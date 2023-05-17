@@ -84,15 +84,15 @@ function MobileNavigation(props) {
   const [token ,setToken] = useState('')
   const [user,loading]=useAuthState(auth)
   console.log(token)
-  const route=useRouter() 
+  useRouter() 
   useEffect(() => {
     setToken(localStorage.getItem('token'))
   },[])
   if (loading) return <h1>Loading ....</h1>
-  // const logout=async()=>{
-  //     if ((!user)|| (token=="")) route.push('/auth/login')
-  //     auth.signOut()
-  // }
+  async()=>{
+      if ((!user)|| (token=="")) route.push('/auth/login')
+      auth.signOut()
+  }
   // eslint-disable-next-line react-hooks/rules-of-hooks
   if (user || token !="")
   return (
