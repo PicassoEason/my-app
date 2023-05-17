@@ -51,18 +51,26 @@ const DeleteMessage = async () => {
   
 }
 //新增留言(當前用戶)
-// const AddMessage = async () => {
-//   try{
-//     let payload = {
-//       email: email,
-//       password: password,
-//     }
-//     const res = await axios.post('http://localhost:8080/api/MessageBoard/megs',payload);
-
-//   }catch(error){
-
-//   }
-// }
+const AddMessage = async (event) => {
+  event.preventDefault()
+  const token= localStorage.getItem('token')
+  console.log(token)
+  try {
+    let payload = {
+      UserName: UserName.value,
+      body: body.value,
+    };
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  
+    const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
+    console.log(res.data);
+  } catch (error) {
+    console.log(error)
+    // Handle the error
+  }
+}
 
 
 function classNames(...classes) {
@@ -92,8 +100,6 @@ function Appearance({ title, description, event, cta, href }) {
 export default function TechNote() {
   const [token ,setToken] = useState('')
     const [user,loading]=useAuthState(auth)
-    console.log(token)
-    const route=useRouter() 
     useEffect(() => {
         setToken(localStorage.getItem('token'))
         AllMessage()
@@ -159,9 +165,19 @@ export default function TechNote() {
                 </label>
                 <div>
                   <textarea
+                    rows={1}
+                    name="UserName"
+                    id="UserName"
+                    className="block  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-40 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="發言人"
+                    defaultValue={'路人'}
+                  />
+                </div>
+                <div>
+                  <textarea
                     rows={5}
-                    name="comment"
-                    id="comment"
+                    name="body"
+                    id="body"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="留下你的名言吧!"
                     defaultValue={''}
@@ -169,7 +185,6 @@ export default function TechNote() {
                 </div>
               
               </Tab.Panel>
-              <div id='message' data-last-displayed-message-id=""></div>
             </Tab.Panels>
           </>
         )}
@@ -182,13 +197,11 @@ export default function TechNote() {
           顯示留言
         </button>
         <button
-          type="submit"
+          onClick={AddMessage}
           className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          新增
-        </button>
-       
+        >新增</button>
       </div>
+      <div id='message' data-last-displayed-message-id=""></div>
     </form>
     </div>: <h1>此處為：登入後顯示留言板</h1>}
       </SimpleLayout>
