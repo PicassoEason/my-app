@@ -99,10 +99,7 @@ export default function TechNote() {
         AllMessage()
     },[])
     if (loading) return <h1>Loading ....</h1>
-    const logout=async()=>{
-        if ((!user)|| (token=="")) route.push('/auth/login')
-        auth.signOut()
-    }
+    
     if (user || token !="")
     // eslint-disable-next-line react-hooks/rules-of-hooks
   return (
@@ -149,7 +146,7 @@ export default function TechNote() {
           
         </div>
     <div><br></br></div>
-   { user || token !== '' ? 
+   { user || token !== null ? 
     <div>
       <form action="">
       <Tab.Group>
