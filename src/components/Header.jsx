@@ -89,10 +89,10 @@ function MobileNavigation(props) {
     setToken(localStorage.getItem('token'))
   },[])
   if (loading) return <h1>Loading ....</h1>
-  async()=>{
-      if ((!user)|| (token=="")) route.push('/auth/login')
-      auth.signOut()
-  }
+  const logout=async()=>{
+    if ((!user)|| (token=="")) route.push('/auth/login')
+    auth.signOut()
+}
   // eslint-disable-next-line react-hooks/rules-of-hooks
   if (user || token !="")
   return (
