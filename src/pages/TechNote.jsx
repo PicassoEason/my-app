@@ -50,9 +50,10 @@ const EditMessage = async () => {
 const DeleteMessage = async () => {
   
 }
-//新增留言(當前用戶)
+// //新增留言(當前用戶)
 const AddMessage = async (event) => {
   event.preventDefault()
+ 
   const token= localStorage.getItem('token')
   console.log(token)
   try {
@@ -63,7 +64,7 @@ const AddMessage = async (event) => {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-  
+    // 無法取得當前token
     const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
     console.log(res.data);
   } catch (error) {
@@ -71,6 +72,7 @@ const AddMessage = async (event) => {
     // Handle the error
   }
 }
+
 
 
 function classNames(...classes) {
