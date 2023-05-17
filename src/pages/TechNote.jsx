@@ -52,9 +52,18 @@ const DeleteMessage = async () => {
   
 }
 //新增留言(當前用戶)
-const AddMessage = async () => {
-  
-}
+// const AddMessage = async () => {
+//   try{
+//     let payload = {
+//       email: email,
+//       password: password,
+//     }
+//     const res = await axios.post('http://localhost:8080/api/MessageBoard/megs',payload);
+
+//   }catch(error){
+
+//   }
+// }
 
 
 function classNames(...classes) {
