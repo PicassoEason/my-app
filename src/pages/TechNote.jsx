@@ -8,46 +8,55 @@ import { useRouter } from 'next/router'
 import {auth} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import axios from 'axios'
-//顯示所有留言(所有用戶)
+// //顯示所有留言(所有用戶)
 
-const AllMessage = async () => {
-  try {
-    const res = await axios.get('http://localhost:8080/api/MessageBoard/');
-    const messages = res.data.message;
-    const messageContainer = document.getElementById("message");
-    const lastDisplayedMessageId = messageContainer.dataset.lastDisplayedMessageId || ""; // 获取已显示的最后一条消息的ID
+// const AllMessage = async () => {
+//   try {
+//     const res = await axios.get('http://localhost:8080/api/MessageBoard/');
+//     const messages = res.data.message;
+//     const messageContainer = document.getElementById("message");
+//     const lastDisplayedMessageId = messageContainer.dataset.lastDisplayedMessageId || ""; // 获取已显示的最后一条消息的ID
+//     return messages
+//     // messages.forEach((message) => {
+//     //   const messageId = message._id;
   
-    messages.forEach((message) => {
-      const messageId = message._id;
+//     //   // 判断是否为新的消息
+//     //   if (messageId > lastDisplayedMessageId) {
+//     //     const username = message.UserName;
+//     //     const body = message.body;
+       
+//     //   }
+//     // });
   
-      // 判断是否为新的消息
-      if (messageId > lastDisplayedMessageId) {
-        const username = message.UserName;
-        const body = message.body;
-        const messageHTML = `
-          <p>誰說的: ${username}</p>
-          <p>說啥?: ${body}</p>
-          <hr>`;
-  
-        messageContainer.innerHTML += messageHTML;
-      }
-    });
-  
-    // 更新最后一条已显示消息的ID
-    const lastMessage = messages[messages.length - 1];
-    const lastMessageId = lastMessage._id;
-    messageContainer.dataset.lastDisplayedMessageId = lastMessageId;
-  } catch (error) {
-    console.error(error);
+//     // // 更新最后一条已显示消息的ID
+//     // const lastMessage = messages[messages.length - 1];
+//     // const lastMessageId = lastMessage._id;
+//     // messageContainer.dataset.lastDisplayedMessageId = lastMessageId;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// }
+//編輯該留言(userid為當前用戶的留言)
+const EditMessage = async (event) => {
+  event.preventDefault()
+  const user=auth.currentUser
+  const userName=user.displayName
+  try{
+
+  }catch(error){
+    console.log(error)
   }
 }
-//編輯該留言(userid為當前用戶的留言)
-const EditMessage = async () => {
-  
-}
 //刪除留言(當前用戶)
-const DeleteMessage = async () => {
-  
+const DeleteMessage = async (event) => {
+  event.preventDefault()
+  const user=auth.currentUser
+  const uuid=user.uid
+  try{
+    
+  }catch(error){
+    console.log(error)
+  }
 }
 // //新增留言(當前用戶)
 const AddMessage = async (event) => {
@@ -113,12 +122,21 @@ function Appearance({ title, description, event, cta, href }) {
 }
 
 export default function TechNote() {
-  const [token ,setToken] = useState('')
+    const [token ,setToken] = useState('')
     const [user,loading]=useAuthState(auth)
+    const [messages,setMessages]=useState([])
     useEffect(() => {
-        setToken(localStorage.getItem('token'))
-        AllMessage()
+        // setToken(localStorage.getItem('token'))
+        (async()=>{
+          const res = await axios.get('http://localhost:8080/api/MessageBoard/');
+          const messages = res.data.message;
+        
+          console.log(messages)
+          setMessages(messages)
+        })()
     },[])
+    console.log(messages)
+
     if (loading) return <h1>Loading ....</h1>
     
     if (user || token !="")
@@ -184,7 +202,7 @@ export default function TechNote() {
                     name="UserName"
                     id="UserName"
                     className="block  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-40 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="發言人"
+                    placeholder="留言更新處"
                   />
                 </div> */}
                 <div>
@@ -204,18 +222,26 @@ export default function TechNote() {
         )}
       </Tab.Group>
       <div className="mt-2 flex justify-end">
-        <button
+        {/* <button
         onClick={AllMessage}
           className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           顯示留言
-        </button>
+        </button> */}
         <button
           onClick={AddMessage}
           className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >新增</button>
       </div>
-      <div id='message' data-last-displayed-message-id="" className=' text-zinc-800 dark:text-zinc-100'></div>
+      <div id='message' data-last-displayed-message-id="" className=' text-zinc-800 dark:text-zinc-100'>
+       
+        {messages.map(item => (<>
+        <p>誰說的: {item.UserName}</p>
+          <p>說啥?: {item.body}</p>
+          <hr/>
+        </>))}
+      
+      </div>
     </form>
     </div>: <h1>此處為：登入後顯示留言板</h1>}
       </SimpleLayout>
