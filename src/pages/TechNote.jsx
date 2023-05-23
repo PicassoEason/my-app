@@ -10,37 +10,10 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import axios from 'axios'
 // //顯示所有留言(所有用戶)
 
-// const AllMessage = async () => {
-//   try {
-//     const res = await axios.get('http://localhost:8080/api/MessageBoard/');
-//     const messages = res.data.message;
-//     const messageContainer = document.getElementById("message");
-//     const lastDisplayedMessageId = messageContainer.dataset.lastDisplayedMessageId || ""; // 获取已显示的最后一条消息的ID
-//     return messages
-//     // messages.forEach((message) => {
-//     //   const messageId = message._id;
-  
-//     //   // 判断是否为新的消息
-//     //   if (messageId > lastDisplayedMessageId) {
-//     //     const username = message.UserName;
-//     //     const body = message.body;
-       
-//     //   }
-//     // });
-  
-//     // // 更新最后一条已显示消息的ID
-//     // const lastMessage = messages[messages.length - 1];
-//     // const lastMessageId = lastMessage._id;
-//     // messageContainer.dataset.lastDisplayedMessageId = lastMessageId;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
 //編輯該留言(userid為當前用戶的留言)
 const EditMessage = async (event) => {
   event.preventDefault()
-  const user=auth.currentUser
-  const userName=user.displayName
+
   try{
     
   }catch(error){
@@ -59,8 +32,7 @@ const DeleteMessage = async (event) => {
   }
 }
 // //新增留言(當前用戶)
-const AddMessage = async (event) => {
-  event.preventDefault()
+const AddMessage = async () => {
   // const token= localStorage.getItem('token') //傳統方式token
   // const token2= auth.token //傳統方式token
   const user=auth.currentUser
@@ -189,15 +161,6 @@ export default function TechNote() {
                 <label htmlFor="comment" className="sr-only">
                   Comment
                 </label>
-                {/* <div>
-                  <textarea
-                    rows={1}
-                    name="UserName"
-                    id="UserName"
-                    className="block  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-40 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder="留言更新處"
-                  />
-                </div> */}
                 <div>
                   <textarea
                     rows={5}
@@ -215,12 +178,6 @@ export default function TechNote() {
         )}
       </Tab.Group>
       <div className="mt-2 flex justify-end">
-        {/* <button
-        onClick={AllMessage}
-          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          顯示留言
-        </button> */}
         <button
           onClick={AddMessage}
           className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
