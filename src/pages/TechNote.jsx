@@ -42,7 +42,7 @@ const EditMessage = async (event) => {
   const user=auth.currentUser
   const userName=user.displayName
   try{
-
+    
   }catch(error){
     console.log(error)
   }
@@ -61,20 +61,12 @@ const DeleteMessage = async (event) => {
 // //新增留言(當前用戶)
 const AddMessage = async (event) => {
   event.preventDefault()
- 
   // const token= localStorage.getItem('token') //傳統方式token
   // const token2= auth.token //傳統方式token
   const user=auth.currentUser
   const userName=user.displayName
-
-
   const email=user.email
   const uuid=user.uid
-  // console.log(user)
-  // console.log(userName)
-  // console.log(email)
-  // console.log(uuid)
- 
   try {
     let payload = {
       uuid:uuid,
@@ -90,8 +82,9 @@ const AddMessage = async (event) => {
     // const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
     console.log(res.data);
   } catch (error) {
-    console.log(error)
-    // Handle the error
+    if(error.response && error.response.status === 500){
+     window.alert("輸入留言板內容");
+    }
   }
 }
 
@@ -239,6 +232,13 @@ export default function TechNote() {
         <p>誰說的: {item.UserName}</p>
           <p>說啥?: {item.body}</p>
           <hr/>
+          {
+            item.uuid == auth.currentUser.uid & item.UserName!=null ?
+            <>
+            <button onClick={EditMessage}>編輯</button> <button onClick={DeleteMessage}>刪除</button>
+            </>
+            : <></>
+          }
         </>))}
       
       </div>
