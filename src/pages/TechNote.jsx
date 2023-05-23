@@ -24,7 +24,6 @@ const AllMessage = async () => {
       if (messageId > lastDisplayedMessageId) {
         const username = message.UserName;
         const body = message.body;
-  
         const messageHTML = `
           <p>誰說的: ${username}</p>
           <p>說啥?: ${body}</p>
@@ -54,18 +53,32 @@ const DeleteMessage = async () => {
 const AddMessage = async (event) => {
   event.preventDefault()
  
-  const token= localStorage.getItem('token')
-  console.log(token)
+  // const token= localStorage.getItem('token') //傳統方式token
+  // const token2= auth.token //傳統方式token
+  const user=auth.currentUser
+  const userName=user.displayName
+
+
+  const email=user.email
+  const uuid=user.uid
+  // console.log(user)
+  // console.log(userName)
+  // console.log(email)
+  // console.log(uuid)
+ 
   try {
     let payload = {
-      UserName: UserName.value,
+      uuid:uuid,
+      UserName: userName,
       body: body.value,
     };
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   Authorization: `Bearer ${token}`,
+    // };
+    const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload);
+
     // 無法取得當前token
-    const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
+    // const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
     console.log(res.data);
   } catch (error) {
     console.log(error)
@@ -165,16 +178,15 @@ export default function TechNote() {
                 <label htmlFor="comment" className="sr-only">
                   Comment
                 </label>
-                <div>
+                {/* <div>
                   <textarea
                     rows={1}
                     name="UserName"
                     id="UserName"
                     className="block  rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-40 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="發言人"
-                    defaultValue={'路人'}
                   />
-                </div>
+                </div> */}
                 <div>
                   <textarea
                     rows={5}
