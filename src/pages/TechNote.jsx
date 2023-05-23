@@ -22,7 +22,7 @@ const AllMessage = async () => {
   
       // 判断是否为新的消息
       if (messageId > lastDisplayedMessageId) {
-        const username = message.Username;
+        const username = message.UserName;
         const body = message.body;
   
         const messageHTML = `
