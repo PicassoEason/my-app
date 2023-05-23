@@ -11,9 +11,13 @@ import axios from 'axios'
 //編輯該留言(userid為當前用戶的留言)
 
 function EditMessage(id){
-  event.preventDefault()
+  // event.preventDefault()
   try{
-
+    let payload = {
+      body: reNewBody.value,
+    };
+    // console.log(payload)
+    axios.put(`http://localhost:8080/api/MessageBoard/megs/${id}`,payload)
   }catch(error){
     console.log(error)
   }
@@ -84,7 +88,6 @@ export default function TechNote() {
     const [user,loading]=useAuthState(auth)
     const [messages,setMessages]=useState([])
     const [editingPostId,setEditPostId]=useState("")
-    console.log(editingPostId)
     useEffect(() => {
         // setToken(localStorage.getItem('token'))
         (async()=>{
@@ -184,12 +187,12 @@ export default function TechNote() {
             <textarea
                     rows={2}
                     name="body"
-                    id="body"
+                    id="reNewBody"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
                     placeholder="時間改不了，但也不能阻止我說話的權利!"
                     defaultValue={''}
                   />
-             <button>更新</button>
+             <button onClick={()=>EditMessage(editingPostId)}>更新</button>
           </form> 
           :<p>內容: {item.body}</p>
           }
