@@ -16,7 +16,9 @@ export default function Dashboard(){
     if (loading) return <h1>Loading ....</h1>
     const logout=async()=>{
         auth.signOut()
-        if ((!user)|| (token=="")) route.push('/auth/login')
+        if ((!user)|| (token=="")) 
+        route.push('/auth/login')
+        
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
     if (user || token !="")

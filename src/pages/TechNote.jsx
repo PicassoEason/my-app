@@ -8,11 +8,15 @@ import { useRouter } from 'next/router'
 import {auth} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import axios from 'axios'
-// //顯示所有留言(所有用戶)
-
 //編輯該留言(userid為當前用戶的留言)
-function EditMessage(id){
 
+function EditMessage(id){
+  event.preventDefault()
+  try{
+
+  }catch(error){
+    console.log(error)
+  }
 }
 //刪除留言(當前用戶)
 function DeleteMessage(id){
@@ -51,8 +55,6 @@ const AddMessage = async () => {
   }
 }
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -81,17 +83,16 @@ export default function TechNote() {
     const [token ,setToken] = useState('')
     const [user,loading]=useAuthState(auth)
     const [messages,setMessages]=useState([])
+    const [editingPostId,setEditPostId]=useState("")
+    console.log(editingPostId)
     useEffect(() => {
         // setToken(localStorage.getItem('token'))
         (async()=>{
           const res = await axios.get('http://localhost:8080/api/MessageBoard/');
           const messages = res.data.message;
-        
-          console.log(messages)
           setMessages(messages)
         })()
     },[])
-    console.log(messages)
 
     if (loading) return <h1>Loading ....</h1>
     
@@ -154,7 +155,7 @@ export default function TechNote() {
                 </label>
                 <div>
                   <textarea
-                    rows={5}
+                    rows={3}
                     name="body"
                     id="body"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
@@ -177,13 +178,26 @@ export default function TechNote() {
       <div id='message' data-last-displayed-message-id="" className=' text-zinc-800 dark:text-zinc-100'>
        
         {messages.map(item => (<>
-        <p>誰說的: {item.UserName}</p>
-          <p>說啥?: {item.body}</p>
+        <p>發言人: {item.UserName}</p>
+        {editingPostId=== item._id ?
+          <form>
+            <textarea
+                    rows={2}
+                    name="body"
+                    id="body"
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
+                    placeholder="時間改不了，但也不能阻止我說話的權利!"
+                    defaultValue={''}
+                  />
+             <button>更新</button>
+          </form> 
+          :<p>內容: {item.body}</p>
+          }
           <hr/>
           {
             item.uuid == auth.currentUser.uid & item.UserName!=null ?
             <>
-            <button onClick={EditMessage(item._id)}>編輯</button> <button onClick={()=>DeleteMessage(item._id)}>刪除</button>
+            <button type='button' onClick={()=>setEditPostId(item._id)}>編輯</button> <button onClick={()=>DeleteMessage(item._id)}>刪除</button>
             </>
             : <></>
           }
