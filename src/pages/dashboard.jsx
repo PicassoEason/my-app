@@ -2,7 +2,7 @@ import {auth} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from "react"
-
+import { SimpleLayout } from '@/components/SimpleLayout'
 export default function Dashboard(){
     // let emptyString = new String();
     // const token = localStorage.getItem('token')
@@ -21,9 +21,14 @@ export default function Dashboard(){
     // eslint-disable-next-line react-hooks/rules-of-hooks
     if (user || token !="")
     return(
+        <SimpleLayout>
+
         <div>
-            <h1>Welcome to Your dashboard </h1>
-            <button onClick={logout}>Sign out</button>
+            <h1 className='text-4xl text-zinc-800 dark:text-zinc-100'>Welcome to dashboard </h1>
+            <button onClick={logout} className='text-cyan-500 text-2xl'>Sign out</button>
+          
         </div>
+        </SimpleLayout>
+        
     )
 }

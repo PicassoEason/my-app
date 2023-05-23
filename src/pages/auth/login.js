@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { FcGoogle } from "react-icons/fc"
-import { AiFillFacebook, AiFillGithub } from "react-icons/ai"
+import { AiFillFacebook, AiFillGithub,AiFillQuestionCircle} from "react-icons/ai"
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
@@ -42,6 +42,18 @@ export default function Login() {
       console.log(error)
     }
   }
+  //signInAnonymously
+  const AnonyLogin = async () => {
+    signInAnonymously(auth)
+      .then(() => {
+        // Signed in..
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+      });
+  }
   // -----------------------------------------------------------
   const HandleLogin = async (email, password) => {
     try {
@@ -79,11 +91,7 @@ export default function Login() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
+          
           <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>
@@ -150,17 +158,22 @@ export default function Login() {
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4">
+              <div className="mt-6 grid grid-cols-3 gap-4">
 
                 <button onClick={GoogleLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
                   <FcGoogle className="text-2xl" />
-                  Sign in with Google
+                  Google
                 </button>
 
                 <button onClick={GithubLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
                   <AiFillGithub className="text-2xl text-blue-500" />
-                  Sign in with Github
+                  Github
                 </button>
+                <button onClick={AnonyLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
+                  <AiFillQuestionCircle className="text-2xl text-blue-500" />
+                  匿名登入
+                </button>
+                
               </div>
 
             </div>
