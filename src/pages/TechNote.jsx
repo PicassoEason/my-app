@@ -11,22 +11,13 @@ import axios from 'axios'
 // //顯示所有留言(所有用戶)
 
 //編輯該留言(userid為當前用戶的留言)
-const EditMessage = async (event) => {
-  event.preventDefault()
+function EditMessage(id){
 
-  try{
-    
-  }catch(error){
-    console.log(error)
-  }
 }
 //刪除留言(當前用戶)
-const DeleteMessage = async (event) => {
-  event.preventDefault()
-  const user=auth.currentUser
-  const uuid=user.uid
+function DeleteMessage(id){
   try{
-    
+    axios.delete(`http://localhost:8080/api/MessageBoard/megs/${id}`)
   }catch(error){
     console.log(error)
   }
@@ -37,7 +28,7 @@ const AddMessage = async () => {
   // const token2= auth.token //傳統方式token
   const user=auth.currentUser
   const userName=user.displayName
-  const email=user.email
+
   const uuid=user.uid
   try {
     let payload = {
@@ -48,7 +39,7 @@ const AddMessage = async () => {
     // const headers = {
     //   Authorization: `Bearer ${token}`,
     // };
-    const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload);
+    const res = await axios.post(`http://localhost:8080/api/MessageBoard/megs`, payload);
 
     // 無法取得當前token
     // const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
@@ -192,10 +183,11 @@ export default function TechNote() {
           {
             item.uuid == auth.currentUser.uid & item.UserName!=null ?
             <>
-            <button onClick={EditMessage}>編輯</button> <button onClick={DeleteMessage}>刪除</button>
+            <button onClick={EditMessage(item._id)}>編輯</button> <button onClick={()=>DeleteMessage(item._id)}>刪除</button>
             </>
             : <></>
           }
+        
         </>))}
       
       </div>
