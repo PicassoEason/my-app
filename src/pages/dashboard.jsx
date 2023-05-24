@@ -8,6 +8,7 @@ export default function Dashboard(){
     // const token = localStorage.getItem('token')
     const [token ,setToken] = useState('')
     const [user,loading]=useAuthState(auth)
+  
     console.log(token)
     const route=useRouter() 
     useEffect(() => {
@@ -26,7 +27,10 @@ export default function Dashboard(){
         <SimpleLayout>
 
         <div>
-            <h1 className='text-4xl text-zinc-800 dark:text-zinc-100'>Welcome to dashboard </h1>
+            <h1 className='text-4xl text-zinc-800 dark:text-zinc-100'>Welcome to
+
+            dashboard </h1>
+            
             <button onClick={logout} className='text-cyan-500 text-2xl'>Sign out</button>
           
         </div>

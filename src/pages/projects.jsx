@@ -4,9 +4,6 @@ import Image from 'next/image'
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
 
 const projects = [
@@ -14,42 +11,15 @@ const projects = [
     name: '溫溼度感測',
     description:
       'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: '#', label: 'github.com' },
+    link: { href: 'https://github.com/PicassoEason/PI-GetTH', label: 'github.com' },
     logo: logoPlanetaria,
   },
   {
-    name: 'Animaginary',
+    name: 'PWA 練習',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
+      '網站架設中漸進式網絡應用程式（英語：Progressive Web Apps，簡稱：PWA）是一種普通網頁或網站架構起來的網絡應用程式，但它可以以傳統應用程式或原生移動應用程式形式展示給用戶。',
+    link: { href: 'https://eason-website.vercel.app/', label: 'github.com' },
     logo: logoAnimaginary,
-  },
-  {
-    name: 'HelioStream',
-    description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
-  },
-  {
-    name: 'cosmOS',
-    description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
-  },
-  {
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
-  },{
-    name: 'OpenShuttle',
-    description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
   },
 ]
 
