@@ -93,6 +93,7 @@ export default function TechNote() {
           const res = await axios.get('http://localhost:8080/api/MessageBoard/');
           const messages = res.data.message;
           setMessages(messages)
+          setToken(localStorage.getItem('token'))
         })()
     },[])
 
