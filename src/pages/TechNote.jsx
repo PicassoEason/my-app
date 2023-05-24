@@ -181,7 +181,12 @@ export default function TechNote() {
       <div id='message' data-last-displayed-message-id="" className=' text-zinc-800 dark:text-zinc-100'>
        
         {messages.map(item => (<>
-        <p>發言人: {item.UserName}</p>
+        <p>發言人: {
+         item.UserName == null ?
+         "匿名"
+         :
+          item.UserName
+          }</p>
         {editingPostId=== item._id ?
           <form>
             <textarea 
