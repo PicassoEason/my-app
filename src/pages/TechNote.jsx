@@ -86,6 +86,7 @@ export default function TechNote() {
     const [user,loading]=useAuthState(auth)
     const [messages,setMessages]=useState([])
     const [editingPostId,setEditPostId]=useState("")
+    const route=useRouter() 
     useEffect(() => {
         // setToken(localStorage.getItem('token'))
         (async()=>{
