@@ -171,7 +171,7 @@ export default function Login() {
                 </button>
                 <button onClick={AnonyLogin} className="text-white bg-gray-700 p-4 w-full font-medium rounded-lg flex align-middle gap-2">
                   <AiFillQuestionCircle className="text-2xl text-blue-500" />
-                  匿名登入
+                  匿名者
                 </button>
                 
               </div>

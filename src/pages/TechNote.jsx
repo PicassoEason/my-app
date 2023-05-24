@@ -49,8 +49,6 @@ const AddMessage = async () => {
     // };
     const res = await axios.post(`http://localhost:8080/api/MessageBoard/megs`, payload);
 
-    // 無法取得當前token
-    // const res = await axios.post('http://localhost:8080/api/MessageBoard/megs', payload, { headers });
     console.log(res.data);
   } catch (error) {
     if(error.response && error.response.status === 500){
@@ -184,7 +182,8 @@ export default function TechNote() {
         <p>發言人: {item.UserName}</p>
         {editingPostId=== item._id ?
           <form>
-            <textarea
+            <textarea 
+                   
                     rows={2}
                     name="body"
                     id="reNewBody"
@@ -200,7 +199,7 @@ export default function TechNote() {
           {
             item.uuid == auth.currentUser.uid & item.UserName!=null ?
             <>
-            <button type='button' onClick={()=>setEditPostId(item._id)}>編輯</button> <button onClick={()=>DeleteMessage(item._id)}>刪除</button>
+            <button type='button' onClick={()=>setEditPostId(item._id)}>編輯</button> <button className='text-rose-600' onClick={()=>DeleteMessage(item._id)}>刪除</button>
             </>
             : <></>
           }
